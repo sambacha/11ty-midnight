@@ -1,0 +1,159 @@
+/* ----- Side notes and margin notes ----------------------------------- {{{ */
+/* --- Side note text and numbering --- {{{ */
+
+.sidenote,
+.marginnote {
+  color: var(--color-sidenote);
+
+  font-size: var(--side-note-font-size);
+  line-height: var(--side-note-line-height);
+  vertical-align: baseline;
+
+  /* Align first baseline to body. */
+  margin-top: var(--side-note-baseline-offset);
+}
+
+.sidenote code,
+.marginnote code {
+  color: var(--color-sidenote);
+}
+
+main {
+  counter-reset: sidenote-counter;
+}
+
+.sidenote-number {
+  counter-increment: sidenote-counter;
+}
+
+.sidenote-number:after,
+.sidenote:before {
+  content: counter(sidenote-counter);
+  position: relative;
+}
+
+nav#TOC label,
+label.margin-toggle:not(.sidenote-number),
+.sidenote-number:after,
+.sidenote:before,
+.footnote-ref sup,
+sup {
+  font-size: var(--side-note-font-size);
+  font-weight: 700;
+  font-family: var(--side-note-number-font-family);
+  -webkit-font-feature-settings: "tnum" 1;
+  font-feature-settings: "tnum" 1;
+
+  /* Mimic 'vertical-align: super' (browser style for sup tag)
+   * without causing a gap in our text's implicit grid. */
+  vertical-align: baseline;
+  position: relative;
+  top: var(--side-note-sup-offset);
+}
+
+sup {
+  font-weight: inherit;
+}
+
+/* Make the superscript hang. */
+.sidenote:before { left: var(--side-note-number-hang-left); }
+/* Get first first column of first row to line up with other rows. */
+.sidenote { text-indent: var(--side-note-text-indent); }
+
+/*}}} */
+/* --- Side note input controls --- {{{ */
+
+input.margin-toggle {
+    display: none;
+}
+label.margin-toggle:not(.sidenote-number) {
+    display: none;
+}
+label.sidenote-number {
+    display: inline;
+}
+
+/* Unfortunately, variables aren't in scope here.
+ * See calculations in Horizontal layouting.
+ */
+@media screen and (max-width: calc(26px + 550px + 26px + 169px + 26px - 1px)) {
+  .margin-toggle:checked + .sidenote,
+  .margin-toggle:checked + .marginnote {
+    margin-top: var(--side-note-line-height);
+    vertical-align: baseline;
+  }
+
+  label.margin-toggle {
+    color: var(--color-link);
+  }
+
+  label.margin-toggle:not(.sidenote-number) {
+    display: inline;
+  }
+
+  label {
+    cursor: pointer;
+  }
+}
+
+/* }}} */
+/* }}} */
+/* ----- Headings ------------------------------------------------------ {{{ */
+
+h1, h2 {
+  font-family: var(--font-family-heading);
+  font-weight: var(--heading-font-weight);
+}
+
+h4, h5, h6 {
+  font-weight: normal;
+}
+
+h1.title {
+  margin-top: var(--line-height);
+  margin-bottom: var(--line-height);
+  font-size: var(--title-font-size);
+  line-height: var(--title-line-height);
+}
+
+h1.title code {
+  font-size: var(--title-code-font-size);
+}
+
+h1:not(.title) {
+  font-size: var(--h1-font-size);
+  line-height: var(--h1-line-height);
+  word-spacing: var(--h1-word-spacing);
+
+  margin-top: var(--h1-margin-top);
+  margin-bottom: var(--h1-margin-bottom);
+}
+
+h1:not(.title) code {
+  font-size: var(--h1-code-font-size);
+}
+
+h2 {
+  font-size: var(--h2-font-size);
+  line-height: var(--h2-line-height);
+  word-spacing: var(--h2-word-spacing);
+
+  margin-top: var(--h2-margin-top);
+  margin-bottom: var(--h2-margin-bottom);
+}
+
+h2 code {
+  font-size: var(--h2-code-font-size);
+}
+
+h3 {
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  font-weight: bold;
+}
+
+h1:not(.title) + *, h1:not(.title) + p { margin-top: var(--h1-margin-bottom); }
+h2 + *, h2 + p                         { margin-top: var(--h2-margin-bottom); }
+h3 + *, h3 + p                         { margin-top: 0; }
+
+/* }}} */
